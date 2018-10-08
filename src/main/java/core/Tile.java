@@ -18,6 +18,9 @@ public class Tile  {
 		this.color 		= 	color;
 	}
 
+	public Tile() {
+		
+	}
 	public int 		getNumber() 	{return number;}
 	public String 	getColor()		{return color;}
 	public boolean 	getVisibile()	{return visible;}

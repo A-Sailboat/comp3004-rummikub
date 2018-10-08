@@ -11,7 +11,7 @@ public class DeckTest extends TestCase{
 	
 	public void testDealTile() {
 		Deck deck = new Deck();
-		assertEquals(106, deck.size();
+		assertEquals(106, deck.size());
 		deck.dealTile();
 		assertEquals(105, deck.size());
 	}

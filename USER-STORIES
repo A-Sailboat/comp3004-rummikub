@@ -1,5 +1,5 @@
 Title:
-Correct Hand Size
+Correct Hand Size -
 
 Description:
 As a human player I want all players to be dealt exactly 11 tiles at the beginning  of
@@ -9,4 +9,68 @@ Success:
 Each player's hand size at the beginning of the game is 11 tiles
 Failure:
 Any player's hand  is  any other number of tiles
+
+Writer:
+Henry Proctor
+_________________________________________________________________________________
+Title:
+Correct Tile Cunt
+
+Description:
+As a human player I want to play by the rules of Rummikub, and I therefore I want
+104 tiles in the deck as per the rules 
+Success:
+The game deck has 104 tiles at the games beginning
+Failure:
+The game has greater than 104 tiles at the beginning or later
+The game inadvertantly duplicates tiles
+the game deletes or loses track of tiles
+
+Writer:
+Henry Proctor
+_________________________________________________________________________________
+Title:
+Playable Groups
+
+Description:
+As a human player I want to play tiles as groups, i.e same number differnt color
+tile melds, size 3+ tiles.
+Success:
+The game successfully handles the use and play of groups
+Failure:
+The game does not allow groups to be played
+
+Writer:
+Henry Proctor
+_________________________________________________________________________________
+Title:
+Playable Runs
+
+Description:
+As a human player I want to play tiles as runs, i.e. single color tile groups 
+in a numeric sesquence size 3+ tiles.
+Success:
+The game successfully handles the use and play of groups
+Failure:
+The game does not allow groups to be played
+
+Writer:
+Henry Proctor
+_________________________________________________________________________________
+
+Title:
+Winning the Game
+
+Description:
+As a human player I want to win when I use all my tile, and lose when another player
+uses all their tiles
+Success:
+When a player uses all tiles they are declaired the winner
+Failure:
+The game does not declare a winner 
+The game declares the incorrect winner
+The game does not use appropreate critera to determine the winner
+
+Writer:
+Henry Proctor
 _________________________________________________________________________________

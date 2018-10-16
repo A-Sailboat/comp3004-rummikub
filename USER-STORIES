@@ -14,7 +14,7 @@ Writer:
 Henry Proctor
 _________________________________________________________________________________
 Title:
-Correct Tile Cunt
+Correct Tile Count
 
 Description:
 As a human player I want to play by the rules of Rummikub, and I therefore I want
@@ -75,6 +75,68 @@ Writer:
 Henry Proctor
 _________________________________________________________________________________
 
+Title: AI Stratagy One
+
+Description:
+As a player I want the AI to use multiple different strategies against me
+-This AI player p1 plays its initial 30 (or more) points as soon as it can.	
+-Each turn thereafter, this AI	player plays all the tiles it can.	
+Success:
+AI proforms as expected
+
+Failure:
+AI acts randomly or otherwise unlike the defined behavior
+Writer: Henry Proctor
+
+_________________________________________________________________________________
+
+Title: AI Strategy Two
+
+Description:
+As a player I want the AI to use multiple different strategies against me
+-This AI player p2 plays its initial 30 points only if another player has already played tiles on the table.	
+-If it can play all its tiles (possibly using some tiles already on the table), it does.	
+-Otherwise, each turn, this AI player plays only the tiles of its hand that require using
+ tiles on the table to make melds. That is, if it can’t win this turn, this AI player keeps
+  in its hand all melds that do NOT require the use of tiles already on the table.	
+  
+Success:
+AI proforms as expected
+
+Failure:
+AI acts randomly or otherwise unlike the defined behavior
+
+Writer: Henry Proctor
+
+
+_________________________________________________________________________________
+
+Title: AI Strategy Three
+
+Description:
+As a player I want the AI to use multiple different strategies against me
+-This AI player p1 plays its initial 30 (or more) points as soon as it can.	
+-If it can play all its tiles (possibly using some tiles already	 on the table), it does.	
+-­Else, each turn
+            -If no other player has 3 fewe tiles than p3, then p3 plays only the tiles 
+             of its hand that require using tiles on the table to make melds (as in Strategy 2).	
+  
+            -Else p3 plays all the tiles it can.	
+Success:
+AI proforms as expected
+
+Failure:
+AI acts randomly or otherwise unlike the defined behavior
+
+Writer: Henry Proctor
+
+_________________________________________________________________________________
+
+
+  
+­
+ 
+
 Title:
 
 Description:
@@ -85,4 +147,3 @@ Failure:
 
 
 Writer:
-

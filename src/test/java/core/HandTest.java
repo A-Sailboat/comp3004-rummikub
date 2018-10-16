@@ -14,7 +14,7 @@ public class HandTest extends TestCase{
 	
 	public void testPrintHand() {
 		Hand hand = new Hand();
-		Tile tile = new Tile();
+		Tile tile = new Tile(8, "B", true);
 		hand.addTile(tile);
 		assertEquals("B8", hand.printHand());
 	}
@@ -28,13 +28,14 @@ public class HandTest extends TestCase{
 	
 	public void testArrangeHand() {
 		Hand hand = new Hand();
-		Tile tile = new Tile();
-		Tile tile1 = new Tile();
-		Tile tile2 = new Tile();
+		Tile tile = new Tile(9,"G", true);
+		Tile tile1 = new Tile(2, "B", true);
+		Tile tile2 = new Tile(3, "G", true);
 		hand.addTile(tile);
-		hand.addTile(tile);
-		hand.addTile(tile);
-		assertEquals("B2, G3, G9", hand.printHand());
+		hand.addTile(tile1);
+		hand.addTile(tile2);
+		hand.arrangeHand();
+		assertEquals("B 2, G 3, G 9", hand.printHand());
 	}
 
 }

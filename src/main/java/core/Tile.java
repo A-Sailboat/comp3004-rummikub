@@ -31,7 +31,7 @@ public class Tile  {
 	@Override
 	public final String toString(){
 		if(!visible) {return "A hidden tile";}
-		else {return this.getColor() +" "+ getNumber();}
+		else {return getColor()+ getNumber();}
 	}
 	
 }

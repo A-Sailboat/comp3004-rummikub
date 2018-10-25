@@ -17,12 +17,38 @@ public class Meld  {
 		}
 	public List<Tile> getMeld() {return tiles;}
 	
+	public int  size() {return tiles.size();}
+	public void add(Tile aTile) {
+		tiles.add(aTile);
+		this.type = this.determineType();
+	}
+	public void remove(Tile aTile) {
+		tiles.remove(aTile);
+		this.type = this.determineType();
+	}
+	
+	
+	public String determineType() { 
 		
-	public int add(Tile aTile) {tiles.add(aTile);}
-	public void remove(Tile aTile) {tiles.remove(aTile);}
+		boolean groupFlag = true;
+		boolean runFlag = true;
+
+		for(int i = 0; i<tiles.size()-1; i++){
+			if (tiles.get(i).getColor() == tiles.get(i+1).getColor()){groupFlag = false;}
+			else{runFlag = false;}
+			
+			if (tiles.get(i).getNumber() == tiles.get(i+1).getNumber()-1){groupFlag = false;}
+			else{runFlag = false;}
+			
+			if (tiles.get(i).getNumber() != tiles.get(i+1).getNumber()){groupFlag = false;}
+		}
+		
+		if(groupFlag && runFlag)return "ERROR";
+		if(groupFlag)return "GROUP";
+		if(runFlag)return "RUN";
+		return "INVALID MELD";
+	}
 	
-	
-	public String determineType() {}
 	public String toString() {}
 	public boolean validate() {}
 	

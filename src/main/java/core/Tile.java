@@ -1,7 +1,8 @@
 package core;
 
+import java.util.Comparator;
 
-public class Tile  {
+public class Tile implements Comparable<Tile> {
 	
 	private int 	number;
 	private String 	color;
@@ -33,6 +34,12 @@ public class Tile  {
 		if(!visible) {return "A hidden tile";}
 		else {return getColor()+ getNumber();}
 	}
+	public int compareTo(Tile tile2) {
+		int a = this.getNumber() - tile2.getNumber(); 
+  	 	if (a == 0) {return this.getColor().compareTo(tile2.getColor());}
+  	 	return a;
+	}
+
 	
 }
 

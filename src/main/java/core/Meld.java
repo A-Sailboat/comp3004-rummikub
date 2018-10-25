@@ -49,9 +49,11 @@ public class Meld  {
 		return "INVALID MELD";
 	}
 	
-	public String toString() {}
-	public boolean validate() {}
-	
+	public String toString() {return null;}
+	public boolean validate() {
+		if(this.determineType() != "INVALID MELD")return true;
+		return false;
+	}
 }
 
 

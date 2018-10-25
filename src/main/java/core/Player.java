@@ -3,31 +3,19 @@ package core;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Deck {
+public class Player {
+	ArrayList<Tile> hand = new ArrayList<Tile>();
 	
-	ArrayList<Tile> deck = new ArrayList<Tile>();
+	public Player() {}
 	
-	public Deck() {
-		while(size() != 106) {
-			Tile tile = new Tile();
-			deck.add(tile);
-		}
+	public Player(ArrayList<Tile> hand) {
+		this.hand = hand;
 	}
 	
-	public boolean shuffle(){
-		Collections.shuffle(deck);
-		return true;
+	
+	public ArrayList<Tile> getHand() {
+	return hand;
 	}
 	
-	public Tile dealTile() {
-		if(deck.size() > 0) {
-			return deck.remove(0);
-		}
-		return null;
-	}
-	
-	public int size() {
-		return deck.size();
-	}
 
 }

@@ -51,7 +51,14 @@ public class Meld  {
 		return "INVALID MELD";
 	}
 	
-	public String toString() {return null;}
+	public String toString() {
+		String returnString = new String();
+		returnString += this.determineType();
+		for(Tile t: tiles) {
+			returnString += ("\t"+t.toString());
+		}
+		return returnString;
+	}
 	public boolean validate() {
 		if(this.determineType() != "INVALID MELD")return true;
 		return false;

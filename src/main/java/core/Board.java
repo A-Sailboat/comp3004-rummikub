@@ -10,8 +10,25 @@ public class Board {
 	Meld get(int i){return melds.get(i);}
 	Meld remove(int i){return melds.remove(i);}
 	
-	@Overide 
-	String toString(){}
+	@Override
+	public String toString(){
+		String returnString = new String();
+		int longestMeld = 0;
+		for(Meld m: melds) {
+			if (m.size() > longestMeld)longestMeld = m.size();
+		}
+		returnString += "\t\t";
+		for(Integer i = 0; i<longestMeld; i++) {
+			returnString += "\t"+ i.toString();
+		}
+		returnString += "\nl";
+		
+		for(Integer q = 0; q<melds.size(); q++) {
+			returnString += q.toString()+ "\t" + melds.get(q).toString() + "\nl";
+			
+		}
+		return returnString;
+	}
 	
 }
 

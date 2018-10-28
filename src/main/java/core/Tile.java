@@ -4,16 +4,16 @@ import java.util.Comparator;
 
 public class Tile implements Comparable<Tile> {
 	
-	private int 	number;
+	private Integer	number;
 	private String 	color;
 	private boolean visible;
 	
-	public Tile(int number, String color ) {
+	public Tile(Integer number, String color ) {
 		visible 	=	false;
 		this.number =	number;
 		this.color 	=	color;
 	}
-	public Tile(int number, String color, boolean visible) {
+	public Tile(Integer number, String color, boolean visible) {
 		this.visible 	=	visible;
 		this.number 	= 	number;
 		this.color 		= 	color;
@@ -22,7 +22,7 @@ public class Tile implements Comparable<Tile> {
 	public Tile() {
 		
 	}
-	public int 		getNumber() 	{return number;}
+	public Integer 	getNumber() 	{return number;}
 	public String 	getColor()		{return color;}
 	public boolean 	getVisibile()	{return visible;}
 	
@@ -32,7 +32,8 @@ public class Tile implements Comparable<Tile> {
 	@Override
 	public final String toString(){
 		if(!visible) {return "A hidden tile";}
-		else {return getColor()+ getNumber();}
+		else {return getColor().charAt(0)+ getNumber().toString();}
+		
 	}
 	public int compareTo(Tile tile2) {
 		int a = this.getNumber() - tile2.getNumber(); 

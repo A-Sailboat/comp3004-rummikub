@@ -12,8 +12,11 @@ public class Human extends Player{
 	public String toString() {
 		return "A human player";
 	}
-
-
+	@Override
+	public String play(Board board, Deck deck, ArrayList<String> fileCommands) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
 

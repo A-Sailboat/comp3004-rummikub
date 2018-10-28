@@ -5,15 +5,15 @@ import junit.framework.TestCase;
 public class TileTest extends TestCase{
 	public void testNewTileTwoParameters() {
 		Tile tile = new Tile(5, "BLUE");
-		assertEquals(5, tile.getNumber());
-		assertEquals("blue", tile.getColor());
+		assertTrue(5 == tile.getNumber());
+		assertTrue("BLUE" == tile.getColor());
 	}
 	
 	public void testNewTileThreeParameters() {
 		Tile tile = new Tile(8, "RED", true);
-		assertEquals(8, tile.getNumber());
-		assertEquals("red", tile.getColor());
-		assertEquals(true, tile.getVisibile());
+		assertTrue(8 == tile.getNumber());
+		assertTrue("RED" == tile.getColor());
+		assertTrue(tile.getVisibile());
 	}
 	
 	public void testTileComparator() {

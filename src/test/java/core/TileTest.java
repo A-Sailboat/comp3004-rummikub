@@ -40,4 +40,21 @@ public class TileTest extends TestCase{
 		assertTrue(tile4.compareTo(tile1) > 0);
 	
 	}
+	
+	public void testToString() {
+		Tile tile1 = new Tile(8, "RED");
+		Tile tile2 = new Tile(6, "BLUE");
+		Tile tile3 = new Tile(13, "GREEN");
+		Tile tile4 = new Tile(2, "ORANGE");
+		
+		assertTrue(tile1.toString() == "R8");
+		assertTrue(tile2.toString() == "B6");
+		assertTrue(tile3.toString() == "G13");
+		assertTrue(tile4.toString() == "O2");
+		
+		
+	}
+	
+	
+	
 }

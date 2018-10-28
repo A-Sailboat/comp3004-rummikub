@@ -15,9 +15,11 @@ public class Meld  {
 		this.tiles = tiles;
 		this.type  = this.determineType();
 		}
+	
 	public List<Tile> getMeld() {return tiles;}
 	
 	public int  size() {return tiles.size();}
+	
 	public void add(Tile aTile) {
 		tiles.add(aTile);
 		this.type = this.determineType();

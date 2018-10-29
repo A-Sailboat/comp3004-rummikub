@@ -7,6 +7,9 @@ public class Deck {
 	
 	ArrayList<Tile> deck = new ArrayList<Tile>();
 	
+	public Deck(String string) {
+		
+	}
 	public Deck() {
 		while(size() != 106) {
 			Tile tile = new Tile();

@@ -13,6 +13,7 @@ public class Board {
 	@Override
 	public String toString(){
 		String returnString = new String();
+		
 		int longestMeld = 0;
 		for(Meld m: melds) {
 			if (m.size() > longestMeld)longestMeld = m.size();

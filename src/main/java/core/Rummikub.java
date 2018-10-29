@@ -17,45 +17,98 @@ import java.util.Stack;
 public class Rummikub {
 	
 	private Board board = new Board();
-	private Deck deck = new Deck();
+	private Deck deck;
 	private ArrayList<Player> players = new ArrayList<Player>();
-	private LinkedList<String> fileCommands = new LinkedList<String>();
+	private LinkedList<String> commandQueue = new LinkedList<String>();
 	private final Scanner reader = new Scanner(System.in);
+	private int maxTurns;
 	private int turnNumber = 0;
-	public Rummikub() {}
-	public Rummikub(LinkedList fileCommands) {
+	boolean gameOver = false;
 	
-		this.fileCommands = fileCommands
+	public Rummikub() {
+		deck = new Deck();
+		
+		players.add(new Human());
+		players.add(new Computer(1));
+		players.add(new Computer(2));
+		players.add(new Computer(3));
+		
+	}
+	public Rummikub(String fileLocation) {
+	
+		try {
+			File file = new File(fileLocation);
+			Scanner sc = new Scanner(file);
+			String commandLine =  sc.nextLine();
+			String[] commands = commandLine.split("\n");
+			
+			/*The first five lines contain tile data, in 4 groups of 14 and one group of
+			  the remaining tiles. This is done to promote readability. They all are added
+			  to the deck and will be dealt in order such that:
+			  Line 0 = Player Hand
+			  Line 1 = CPU 1 Hand
+			  Line 2 = CPU 2 Hand
+			  Line 3 = CPU 3 Hand
+			  Line 4 = remainder of deck
+			*/
+			
+			this.deck = new Deck(commands[0]+commands[1]+commands[2]+commands[3]+commands[4]);
+		
+			//Line 5 contains a number that represents maxTurns before game ends,
+			//useful for testing
+			maxTurns = Integer.parseInt(commands[5]);
+			
+			//The remaining lines contain commands that will occur on the player's turns
+			for(int i = 7; i<commands.length; i++) {
+				commandQueue.offer(commands[i]);
+			}
+			
+			players.add(new Human());
+			players.add(new Computer(1));
+			players.add(new Computer(2));
+			players.add(new Computer(3));
+			
+		}catch (IOException e) {
+			System.err.println(e);
+			System.exit(-1);
+		}
 		
 	}
 	public void setDeck(Deck deck) {this.deck = deck;}
-	public void setfileCommands(LinkedList<String> fileCommands){this.fileCommands = fileCommands;}
+	public void setCommandQueue(LinkedList<String> commandQueue){this.commandQueue = fileCommands;}
 	public Deck getDeck() {return this.deck;}
 	
-	public Player play() {
+	public int play() {
+		try {
+			
+			//Give each player 14 tiles
+			for(Player p: players) {
+				for(int i=0; i<14; i++) {
+					p.getHand().add(deck.dealTile())
+				}
+			}
+			String selection;
+			turnNumber = 1;
+			while(!gameOver && turnNumber < maxTurns) {
+				
+				//If commands from the file are present and it is the players turn it will
+				//get commands rather than get player input
+				if(!commandQueue.isEmpty() && players.get(turnNumber%4)instanceof Human) {
+					selection = commandQueue.poll();
+				}else {
+					selection = players.get(turnNumber%4).play(board,deck);
+				}
+				resolveTurn(players.get(turnNumber%4),board,deck,selection);
+				turnNumber++;
+			}
 		
-		players.add(new Human(deck.deal()));
-		players.add(new Computer(deck.deal(),1));
-		players.add(new Computer(deck.deal(),2));
-		players.add(new Computer(deck.deal(),3));
-		
-		turnNumber = 0;
-		boolean gameOver = false;
-		String selection;
-		for(Player p: players) {
-			p.hand()
+			System.out.println("See you space cowboy...");
+			
+			return 0;
+		}catch(Exception e){
+		return -1;
 		}
 		
-		while(!gameOver) {
-			if(!fileCommands.isEmpty() && players.get(turnNumber%4)instanceof Human) {
-				selection = fileCommands.poll();
-			}else {
-				selection = players.get(turnNumber%4).play(board,deck);
-			}
-			resolveTurn(players.get(turnNumber%4),board,deck,selection);
-			}
-		
-		System.out.println("See you space cowboy...");
 	}
 	
 	public void resolveTurn(Player p, Board b, Deck d, String selection) {
@@ -93,21 +146,7 @@ public class Rummikub {
 					game.play();
 				}
 				if (arg.length == 1) { 
-					
-					File file = new File(fileLocation);
-					Scanner sc = new Scanner(file);
-					String commandLine =  sc.nextLine();
-						
-					
-					String[] commands = commandLine.split("\n");
-					System.out.println(commands);
-						
-					this.deck = new Deck(commands[0]);
-						
-					for(int i = 1; i<commands.length; i++) {
-						fileCommands.offer(commands[i]);
-					}
-					Rummikub game = new Rummikub(fileCommands);
+					Rummikub game = new Rummikub(arg[0]);
 					game.play();
 				} else {
 					System.out.println("Correct usage is with 0 or 1 arguments (argument is the file name");

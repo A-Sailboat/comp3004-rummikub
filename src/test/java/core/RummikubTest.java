@@ -19,8 +19,7 @@ public class RummikubTest extends TestCase{
 	public void testConsole () {
 		Rummikub game =  new Rummikub("baseCase.txt");
 	
-		commandQueue.offer("");
-		game.play(commandQueue,0);
+		game.play();
 		
 		//test for if deck deals all players 14
 		AssetTrue(game.getPlayers().get(0).getStrategy() == "HUMAN");

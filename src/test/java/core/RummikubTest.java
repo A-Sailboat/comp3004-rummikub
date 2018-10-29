@@ -3,6 +3,7 @@ package core;
 
 import static org.junit.Assert.*;
 
+import java.util.Collections;
 import java.util.LinkedList;
 
 import org.junit.Test;
@@ -10,20 +11,14 @@ import junit.framework.TestCase;
 
 public class RummikubTest extends TestCase{
 		
-	public void testGroup() {
-		Rummikub game =  new Rummikub();
-		LinkedList<String> commandQueue = new LinkedList<String>;
+	public void testFileMode() {
+		Rummikub game =  new Rummikub("baseCase.txt");
+		assertTrue(game.play() == 0);
 		
-		game.setDeck("R1 R2 R3 R4 R5 R6 R7 R8 R9 R10 R11 R12 R13 R1 "
-					+"R2 R3 R4 R5 R6 R7 R8 R9 R10 R11 R12 R13 B1 B2 "
-					+"B3 B4 B5 B6 B7 B8 B9 B10 B11 B12 B13 B1 B2 B3 "
-					+"B4 B5 B6 B7 B8 B9 B10 B11 B12 B13 O1 O2 O3 O4 "
-					+"O5 O6 O7 O8 O9 O10 O11 O12 O13 O1 O2 O3 O4 O5 "
-					+"O6 O7 O8 O9 O10 O11 O12 O13 G1 G2 G3 G4 G5 G6 "
-					+"G7 G8 G9 G10 G11 G12 G13 G1 G2 G3 G4 G5 G6 G7 "
-					+"G8 G9 G10 G11 G12 G13");
-		
-		
+	}
+	public void testConsole () {
+		Rummikub game =  new Rummikub("baseCase.txt");
+	
 		commandQueue.offer("");
 		game.play(commandQueue,0);
 		
@@ -111,9 +106,11 @@ public class RummikubTest extends TestCase{
 	public void requirementFour() {
 		Rummikub game =  new Rummikub();
 		LinkedList<String> commandQueue = new LinkedList<String>();
+		
+		//
 		Deck testDeck = new Deck("R1 R2 R3 R4 R5 R6 R7 O10 G10 R10 R11 R12 R13 R1 "
-								+"R2 R3 R4 R5 R6 R7 R8 R9 R10 R11 R12 R13 B1 B2 "
-								+"B3 B4 B5 B6 B7 B8 B9 B10 B11 B12 B13 B1 B2 B3 "
+								+"R2 R3 R4 R5 R6 R7 R8 R9 R10 R11 R12 B1 B2 B3 "
+								+"R13 B4 B5 B6 B7 B8 B9 B10 B11 B12 B13 B1 B2 B3 "
 								+"B4 B5 B6 B7 B8 B9 B10 B11 B12 B13 O1 O2 O3 O4 "
 								+"O5 O6 O7 O8 O9 O10 O11 O12 O13 O1 O2 O3 O4 O5 "
 								+"O6 O7 O8 O9 O10 O11 O12 O13 G1 G2 G3 G4 G5 G6 "
@@ -125,8 +122,30 @@ public class RummikubTest extends TestCase{
 		
 		Rummikub testGame = game;
 		commandQueue.offer("");
-		testGame.play(commandQueue,0);
-		AssertTrue(game.getCurrentPlayer().getStrategy() == "HUMAN");
+		
+		AssertTrue(testGame.play(commandQueue) == 0);
+		AssertTrue(game.getHuman().playedInitialThirty());
+		
+		
+		commandQueue = new LinkedList<String>();
+		testDeck = new Deck("R1 R2 R3 R4 R5 R6 R7 O10 G10 R11 R11 R12 R13 R1 "
+								+"R2 R3 R4 R5 R6 R7 R8 R9 R10 R11 R12 B1 B2 B3 "
+								+"R13 B4 B5 B6 B7 B8 B9 B10 B11 B12 B13 B1 B2 B3 "
+								+"B4 B5 B6 B7 B8 B9 B10 B11 B12 B13 O1 O2 O3 O4 "
+								+"O5 O6 O7 O8 O9 O10 O11 O12 O13 O1 O2 O3 O4 O5 "
+								+"O6 O7 O8 O9 O10 O11 O12 O13 G1 G2 G3 G4 G5 G6 "
+								+"G7 G8 G9 G10 G11 G12 G13 G1 G2 G3 G4 G5 G6 G7 "
+								+"G8 G9 G10 G11 G12 G13");
+				
+		game.setDeck(testDeck);
+		
+		
+		Rummikub testGame = game;
+		commandQueue.offer("H8 H9 H10 Meld");
+
+		AssertTrue(testGame.play(commandQueue) == 0);
+		AssertTrue(game.getHuman().playedInitialThirty());
+		
 		
 		
 		assertTrue(forgame.getPlayers());

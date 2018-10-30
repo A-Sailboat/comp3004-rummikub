@@ -6,7 +6,9 @@ import java.util.Scanner;
 
 public class Human extends Player{
 	
-	public Human() {}
+	public Human() {
+		aiType = noAi();
+	}
 
 	@Override
 	public String toString() {

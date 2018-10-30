@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Scanner;
 public class Computer extends Player{
 	
-	public Computer(int i) {}
+	public Computer(Ai newAiType) {
+		aiType = newAiType;
+	}
 
 	
 	@Override
@@ -18,5 +20,8 @@ public class Computer extends Player{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	
 
 }

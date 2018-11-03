@@ -89,6 +89,7 @@ public class Rummikub {
 					p.getHand().add(deck.dealTile());
 				}
 			}
+			
 			String selection;
 			turnNumber = 1;
 			while(!gameOver && turnNumber < maxTurns) {

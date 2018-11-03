@@ -28,6 +28,9 @@ public class Hand {
 		return string;
 	}
 	
+	
+	//Arrange the hand in order. First by colour then by number. 
+	//Example hand = ["O2", "G9", "G2", "R11", "B2", "R2"] = ["R2", "R11", "B2", "G2", "G9", "O2"] 
 	public ArrayList<Tile> arrangeHand(){
 		return null;
 		

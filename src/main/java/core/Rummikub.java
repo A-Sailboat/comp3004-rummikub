@@ -64,9 +64,9 @@ public class Rummikub {
 			}
 			
 			players.add(new Human());
-			players.add(new Computer(1));
-			players.add(new Computer(2));
-			players.add(new Computer(3));
+			players.add(new Computer(new OneAi()));
+			players.add(new Computer(new TwoAi()));
+			players.add(new Computer(new ThreeAi()));
 			
 		}catch (IOException e) {
 			System.err.println(e);
@@ -74,6 +74,8 @@ public class Rummikub {
 		}
 		
 	}
+	
+	
 	public void setDeck(Deck deck) {this.deck = deck;}
 	public void setCommandQueue(LinkedList<String> commandQueue){this.commandQueue = fileCommands;}
 	public Deck getDeck() {return this.deck;}
@@ -84,7 +86,7 @@ public class Rummikub {
 			//Give each player 14 tiles
 			for(Player p: players) {
 				for(int i=0; i<14; i++) {
-					p.getHand().add(deck.dealTile())
+					p.getHand().add(deck.dealTile());
 				}
 			}
 			String selection;
@@ -119,17 +121,17 @@ public class Rummikub {
 		String  returnString = new String();
 		
 		for(int q = 0; q < (turnNumber % 4); q++) {
-			returnString += "\t"
+			returnString += "\t";
 		}
 		returnString += "|\nl";
 		for(int q = 0; q < (turnNumber % 4); q++) {
-			returnString += "\t"
+			returnString += "\t";
 		}
 		returnString += "V\nl";
 		
 		for(int q = 0; q < (turnNumber % 4); q++) {
 			returnString += ("Player " + q);
-			if (players.get(turnNumber)%4 == 0) {returnString += "(Human)";}
+			if (players.get(turnNumber) % 4 == 0) {returnString += "(Human)";}
 			else {returnString += "Computer";}
 			returnString += "\t";
 		}
@@ -138,15 +140,15 @@ public class Rummikub {
 	}
 
 	
-	public static void main(String arg[]) {
+	public static void main(String[] args) {
 			try {
 				
-				if (arg.length == 0) {
+				if (args.length == 0) {
 					Rummikub game = new Rummikub();
 					game.play();
 				}
-				if (arg.length == 1) { 
-					Rummikub game = new Rummikub(arg[0]);
+				if (args.length == 1) { 
+					Rummikub game = new Rummikub(args[0]);
 					game.play();
 				} else {
 					System.out.println("Correct usage is with 0 or 1 arguments (argument is the file name");

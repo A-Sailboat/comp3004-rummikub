@@ -6,25 +6,25 @@ public interface Ai {
 
 }
 
-class noAi implements Ai{
+class NoAi implements Ai{
 	public String ai() {
 		return "No ai";
 	}
 }
 
-class oneAi implements Ai{
+class OneAi implements Ai{
 	public String ai() {
 		return "AI strategy 1";
 	}
 }
 
-class twoAi implements Ai{
+class TwoAi implements Ai{
 	public String ai() {
 		return "AI strategy 2";
 	}
 }
 
-class threeAi implements Ai{
+class ThreeAi implements Ai{
 	public String ai() {
 		return "AI strategy 3";
 	}

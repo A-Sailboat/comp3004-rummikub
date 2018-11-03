@@ -29,9 +29,9 @@ public class Rummikub {
 		deck = new Deck();
 		
 		players.add(new Human());
-		players.add(new Computer(1));
-		players.add(new Computer(2));
-		players.add(new Computer(3));
+		players.add(new Computer(new OneAi()));
+		players.add(new Computer(new TwoAi()));
+		players.add(new Computer(new ThreeAi()));
 		
 	}
 	public Rummikub(String fileLocation) {

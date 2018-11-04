@@ -132,12 +132,13 @@ public class Rummikub {
 		
 		for(int q = 0; q < (turnNumber % 4); q++) {
 			returnString += ("Player " + q);
+			//DON'T KNOW WHAT IS SUPPOSED TO HAPPEN HERE - Cooper 
 			if (players.get(turnNumber) % 4 == 0) {returnString += "(Human)";}
 			else {returnString += "Computer";}
 			returnString += "\t";
 		}
 		returnString += "nl";
-		returnString += board.toString()
+		returnString += board.toString();
 	}
 
 	

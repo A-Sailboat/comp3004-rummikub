@@ -16,7 +16,7 @@ public class HandTest extends TestCase{
 		Hand hand = new Hand();
 		Tile tile = new Tile(8, "B", true);
 		hand.addTile(tile);
-		assertEquals("B8", hand.printHand());
+		assertEquals("B8, ", hand.printHand());
 	}
 	
 	public void testRemoveTile() {
@@ -35,7 +35,8 @@ public class HandTest extends TestCase{
 		hand.addTile(tile1);
 		hand.addTile(tile2);
 		hand.arrangeHand();
-		assertEquals("B 2, G 3, G 9", hand.printHand());
+		System.out.println(hand.printHand());
+		assertEquals("B2, G3, G9, ", hand.printHand());
 	}
 
 }

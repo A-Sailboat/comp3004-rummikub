@@ -57,13 +57,13 @@ public class Tile implements Comparable<Tile> {
 	//Range between int 1 - 48
 	private void setValue() {
 		int count = 0;
-		if (getColor() == "R"){
+		if (getColor().equals("R")) {
 			count += 12 * 0;
-		}else if(getColor() == "B") {
+		}else if(getColor().equals("B")) {
 			count += 12 * 1;
-		}else if (getColor() == "G") {
+		}else if (getColor().equals("G")) {
 			count += 12 * 2;
-		}else if (getColor() == "O") {
+		}else if (getColor().equals("O")) {
 			count += 12 * 3;
 		}
 		count += getNumber();

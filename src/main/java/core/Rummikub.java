@@ -153,7 +153,7 @@ public class Rummikub {
 				if (args.length == 1) { 
 					Rummikub game = new Rummikub(args[0]);
 					game.play();
-				} else {
+				}else {
 					System.out.println("Correct usage is with 0 or 1 arguments (argument is the file name");
 				}
 				

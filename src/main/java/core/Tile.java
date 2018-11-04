@@ -38,7 +38,7 @@ public class Tile implements Comparable<Tile> {
 	
 
 	//Returns String that represents Tile in a String format
-	public final String printTile(){
+	public String printTile(){
 		if(!visible) {
 			return "A hidden tile";
 		}

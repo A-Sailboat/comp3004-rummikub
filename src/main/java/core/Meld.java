@@ -59,6 +59,7 @@ public class Meld  {
 		}
 		return returnString;
 	}
+	
 	public boolean validate() {
 		if(this.determineType() != "INVALID MELD")return true;
 		return false;

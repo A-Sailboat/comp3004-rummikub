@@ -25,6 +25,7 @@ public class Rummikub {
 	private int turnNumber = 0;
 	boolean gameOver = false;
 	
+	//Creates new Deck/Stock and adds a Human Player, and three Computer Players with different AI. 
 	public Rummikub() {
 		deck = new Deck();
 		

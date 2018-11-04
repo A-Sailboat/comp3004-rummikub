@@ -14,8 +14,11 @@ public class Computer extends Player{
 	public String toString() {
 		return "A Computer player";
 	}
+	
+	public String play(Board board, Deck deck) {
+		return null;
+	}
 
-	@Override
 	public String play(Board board, Deck deck, ArrayList<String> fileCommands) {
 		// TODO Auto-generated method stub
 		return null;

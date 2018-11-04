@@ -18,9 +18,11 @@ public abstract class Player {
 	public ArrayList<Tile> getHand() {
 		return hand;
 	}
+	
 	public abstract String play(Board board, Deck deck);
 	
 	
+	//Not actual implementation. Will need later. 
 	public String printAiType(){
 		
 		return aiType.ai();

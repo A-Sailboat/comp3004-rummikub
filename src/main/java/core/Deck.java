@@ -13,10 +13,30 @@ public class Deck {
 	
 	//Creates New Deck and add 106 empty tiles.
 	public Deck() {
-		while(size() != 106) {
-			Tile tile = new Tile();
+		for(int i = 0; i < 13; i++) {
+			Tile tile = new Tile(i, "R");
+			deck.add(tile);
 			deck.add(tile);
 		}
+		for(int i = 0; i < 13; i++) {
+			Tile tile = new Tile(i, "B");
+			deck.add(tile);
+			deck.add(tile);
+		}
+		for(int i = 0; i < 13; i++) {
+			Tile tile = new Tile(i, "G");
+			deck.add(tile);
+			deck.add(tile);
+		}
+		for(int i = 0; i < 13; i++) {
+			Tile tile = new Tile(i, "O");
+			deck.add(tile);
+			deck.add(tile);
+		}
+		/*while(size() != 106) {
+			Tile tile = new Tile();
+			deck.add(tile);
+		}*/
 	}
 	
 	//Shuffles current deck 

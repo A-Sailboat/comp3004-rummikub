@@ -81,7 +81,7 @@ public class Rummikub {
 	//public void setCommandQueue(LinkedList<String> commandQueue){this.commandQueue = fileCommands;}
 	public Deck getDeck() {return this.deck;}
 	
-	public int play() {
+	public void play() {
 		try {
 			
 			//Give each player 14 tiles
@@ -108,9 +108,9 @@ public class Rummikub {
 		
 			System.out.println("See you space cowboy...");
 			
-			return 0;
+			System.out.println("Play is Ready");
 		}catch(Exception e){
-		return -1;
+			System.out.println("Error Dealing Cards");
 		}
 		
 	}

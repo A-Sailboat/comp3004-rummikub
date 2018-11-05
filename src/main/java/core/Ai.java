@@ -15,6 +15,7 @@ class NoAi implements Ai{
 
 //Each Ai will decide differently how to play it's tiles. 
 
+//Represents Ai Strategy 1
 class OneAi implements Ai{
 	public String ai() {
 		return "AI strategy 1";
@@ -25,6 +26,8 @@ class OneAi implements Ai{
 	}
 }
 
+//Represents Ai Strategy 2
+//Do not have to implement for iteration one. 
 class TwoAi implements Ai{
 	public String ai() {
 		return "AI strategy 2";
@@ -35,6 +38,7 @@ class TwoAi implements Ai{
 	}
 }
 
+//Represents Ai Strategy 3
 class ThreeAi implements Ai{
 	public String ai() {
 		return "AI strategy 3";

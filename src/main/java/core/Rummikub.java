@@ -78,7 +78,7 @@ public class Rummikub {
 	
 	
 	public void setDeck(Deck deck) {this.deck = deck;}
-	public void setCommandQueue(LinkedList<String> commandQueue){this.commandQueue = fileCommands;}
+	//public void setCommandQueue(LinkedList<String> commandQueue){this.commandQueue = fileCommands;}
 	public Deck getDeck() {return this.deck;}
 	
 	public int play() {
@@ -118,7 +118,7 @@ public class Rummikub {
 	public void resolveTurn(Player p, Board b, Deck d, String selection) {
 		
 	}
-	public String toString() {
+	/*public String toString() {
 		
 		String  returnString = new String();
 		
@@ -140,17 +140,17 @@ public class Rummikub {
 		}
 		returnString += "nl";
 		returnString += board.toString();
-	}
+	}*/
 
 	
 	public static void main(String[] args) {
 			try {
-				
+				System.out.println(args.length);
 				if (args.length == 0) {
 					Rummikub game = new Rummikub();
 					game.play();
 				}
-				if (args.length == 1) { 
+				else if (args.length == 1) { 
 					Rummikub game = new Rummikub(args[0]);
 					game.play();
 				}else {

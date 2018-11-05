@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public abstract class Player {
-	ArrayList<Tile> hand = new ArrayList<Tile>();
+	Hand hand = new Hand();
 	
 	public Ai aiType;
 	
-	public Player() {}
 	
-	public Player(ArrayList<Tile> hand) {
-		this.hand = hand;
+	public Hand getHand() {
+		return hand;
 	}
 	
-	
-	public ArrayList<Tile> getHand() {
+	public Hand addToHand(Tile tile) {
+		hand.addTile(tile);
 		return hand;
 	}
 	

@@ -31,7 +31,7 @@ public class Rummikub {
 		
 		players.add(new Human());
 		players.add(new Computer(new OneAi()));
-		players.add(new Computer(new TwoAi()));
+		players.add(new Computer(new OneAi()));
 		players.add(new Computer(new ThreeAi()));
 		
 	}
@@ -81,14 +81,24 @@ public class Rummikub {
 	//public void setCommandQueue(LinkedList<String> commandQueue){this.commandQueue = fileCommands;}
 	public Deck getDeck() {return this.deck;}
 	
+	
+	//Method that will handle all gameplay
 	public void play() {
 		try {
 			
-			//Give each player 14 tiles
+			Board gameBoard = new Board();
+			
 			for(Player p: players) {
 				for(int i=0; i<14; i++) {
-					p.getHand().add(deck.dealTile());
+					p.addToHand(gameBoard.dealFromBoardDeck());
 				}
+			}
+			
+			System.out.println("Initial Hands: \n" );
+			
+			for (Player p: players) {
+				//System.out.println(p.getHand().getHandSize());
+				System.out.println(p.getHand().printHand());
 			}
 			
 			String selection;

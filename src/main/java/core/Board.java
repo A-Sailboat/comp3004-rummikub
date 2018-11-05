@@ -6,12 +6,20 @@ public class Board {
 	
 	private ArrayList<Meld> melds = new ArrayList<Meld>();
 	boolean complete = false;
-	
+	Deck boardDeck = new Deck();
 	Meld get(int i){return melds.get(i);}
 	Meld remove(int i){return melds.remove(i);}
 	
-	@Override
-	public String toString(){
+	public Board() {
+		boardDeck.shuffle();
+	}
+	
+	public Tile dealFromBoardDeck() {
+		return boardDeck.dealTile();
+	}
+	
+	
+	public String printBoard(){
 		String returnString = new String();
 		
 		int longestMeld = 0;

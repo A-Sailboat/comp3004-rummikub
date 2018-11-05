@@ -51,7 +51,7 @@ public class Meld  {
 		return "INVALID MELD";
 	}
 	
-	public String toString() {
+	public String printMeld() {
 		String returnString = new String();
 		returnString += this.determineType();
 		for(Tile t: tiles) {

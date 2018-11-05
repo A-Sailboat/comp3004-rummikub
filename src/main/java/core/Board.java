@@ -18,6 +18,10 @@ public class Board {
 		return boardDeck.dealTile();
 	}
 	
+	public ArrayList<Meld> getMeldsOnBoard() {
+		return melds;
+	}
+	
 	
 	public String printBoard(){
 		String returnString = new String();

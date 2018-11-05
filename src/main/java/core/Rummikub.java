@@ -16,18 +16,19 @@ import java.util.Stack;
 
 public class Rummikub {
 	
-	private Board board = new Board();
-	private Deck deck;
+	private Board gameBoard;
+	//private Deck deck;
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private LinkedList<String> commandQueue = new LinkedList<String>();
 	private final Scanner reader = new Scanner(System.in);
 	private int maxTurns;
 	private int turnNumber = 0;
+	int roundCounter = 1;
 	boolean gameOver = false;
 	
 	//Creates new Deck/Stock and adds a Human Player, and three Computer Players with different AI. 
 	public Rummikub() {
-		deck = new Deck();
+		//deck = new Deck();
 		
 		players.add(new Human());
 		players.add(new Computer(new OneAi()));
@@ -53,7 +54,7 @@ public class Rummikub {
 			  Line 4 = remainder of deck
 			*/
 			
-			this.deck = new Deck(commands[0]+commands[1]+commands[2]+commands[3]+commands[4]);
+			//this.deck = new Deck(commands[0]+commands[1]+commands[2]+commands[3]+commands[4]);
 		
 			//Line 5 contains a number that represents maxTurns before game ends,
 			//useful for testing
@@ -77,16 +78,16 @@ public class Rummikub {
 	}
 	
 	
-	public void setDeck(Deck deck) {this.deck = deck;}
+	/*public void setDeck(Deck deck) {this.deck = deck;}
 	//public void setCommandQueue(LinkedList<String> commandQueue){this.commandQueue = fileCommands;}
-	public Deck getDeck() {return this.deck;}
+	public Deck getDeck() {return this.deck;}*/
 	
 	
 	//Method that will handle all gameplay
 	public void play() {
 		try {
 			
-			Board gameBoard = new Board();
+			gameBoard = new Board();
 			
 			for(Player p: players) {
 				for(int i=0; i<14; i++) {
@@ -98,12 +99,18 @@ public class Rummikub {
 			
 			for (Player p: players) {
 				//System.out.println(p.getHand().getHandSize());
-				System.out.println(p.getHand().printHand());
+				//System.out.println(p.getHand().printHand());
+				p.getHand().arrangeHand();
+				System.out.println("\t" + p.getHand().printHand());
 			}
+			
+			
+			
+			
 			
 			String selection;
 			turnNumber = 1;
-			while(!gameOver && turnNumber < maxTurns) {
+			/*while(!gameOver && turnNumber < maxTurns) {
 				
 				//If commands from the file are present and it is the players turn it will
 				//get commands rather than get player input
@@ -114,9 +121,9 @@ public class Rummikub {
 				}
 				resolveTurn(players.get(turnNumber%4),board,deck,selection);
 				turnNumber++;
-			}
+			}*/
 		
-			System.out.println("See you space cowboy...");
+			//System.out.println("See you space cowboy...");
 			
 			System.out.println("Play is Ready");
 		}catch(Exception e){
@@ -125,9 +132,9 @@ public class Rummikub {
 		
 	}
 	
-	public void resolveTurn(Player p, Board b, Deck d, String selection) {
+	/*public void resolveTurn(Player p, Board b, Deck d, String selection) {
 		
-	}
+	}*/
 	/*public String toString() {
 		
 		String  returnString = new String();

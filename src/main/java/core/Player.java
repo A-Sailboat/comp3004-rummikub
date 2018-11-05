@@ -5,6 +5,7 @@ import java.util.Collections;
 
 public abstract class Player {
 	Hand hand = new Hand();
+	String playerName;
 	
 	public Ai aiType;
 	
@@ -32,6 +33,14 @@ public abstract class Player {
 		
 		aiType = newAiType;
 		
+	}
+	
+	public void setPlayerName(String setName) {
+		playerName = setName;
+	}
+	
+	public String getPlayerName() {
+		return playerName;
 	}
 	
 	public Ai getAiType() {

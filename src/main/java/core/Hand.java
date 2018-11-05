@@ -55,7 +55,7 @@ public class Hand {
 				}
 				
 			}
-			System.out.println(hand.get(positionOfLowestValueAlreadySorted).getValue());
+			//System.out.println(hand.get(positionOfLowestValueAlreadySorted).getValue());
 			arrangedHand.add(hand.remove(positionOfLowestValueAlreadySorted));
 		}
 		

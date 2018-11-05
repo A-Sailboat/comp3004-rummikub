@@ -8,6 +8,11 @@ public class Deck {
 	ArrayList<Tile> deck = new ArrayList<Tile>();
 	
 	public Deck(String string) {
+		String[] tileList= string.split(" ");
+		
+		for(String t: tileList) {
+			deck.add(new Tile(t));
+		}
 		
 	}
 	

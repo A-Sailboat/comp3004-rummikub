@@ -16,6 +16,23 @@ public class Tile implements Comparable<Tile> {
 		setValue();
 	}
 	
+	public Tile(String twoPartId) {
+		this.visible 	=	true;
+		
+		if(twoPartId.charAt(0) == 'B') {
+			this.color = "BLUE";
+		}else if(twoPartId.charAt(0) == 'G') {
+			this.color = "GREEN";
+		}else if(twoPartId.charAt(0) == 'R') {
+			this.color = "RED";
+		}else if(twoPartId.charAt(0) == 'O') {
+			this.color = "ORANGE";
+		}
+	
+		this.number 	= 	number;
+
+	}
+	
 	public Tile(int number, String color, boolean visible) {
 		this.visible 	=	visible;
 		this.number 	= 	number;

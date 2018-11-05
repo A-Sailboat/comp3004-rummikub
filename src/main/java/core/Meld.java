@@ -29,6 +29,13 @@ public class Meld  {
 		this.type = this.determineType();
 	}
 	
+
+	public Tile remove(int i) {
+		Tile aTile = tiles.remove(i);
+		this.type = this.determineType();
+		return aTile;
+	}
+	
 	
 	public String determineType() { 
 		

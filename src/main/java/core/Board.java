@@ -10,6 +10,8 @@ public class Board {
 	Meld get(int i){return melds.get(i);}
 	Meld remove(int i){return melds.remove(i);}
 	
+	public void add(Meld m) {melds.add(m);}
+	
 	@Override
 	public String toString(){
 		String returnString = new String();

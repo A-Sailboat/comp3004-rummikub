@@ -2,6 +2,7 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public abstract class Player {
 	ArrayList<Tile> hand = new ArrayList<Tile>();
@@ -33,5 +34,9 @@ public abstract class Player {
 		
 		aiType = newAiType;
 		
+	}
+
+	public String play(Board board, Deck deck, Scanner reader) {
+		return null;
 	}
 }

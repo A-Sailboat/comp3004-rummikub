@@ -7,11 +7,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
+
+import junit.framework.Test;
 
 
 public class Rummikub {
@@ -37,7 +40,10 @@ public class Rummikub {
 	public Rummikub(String fileLocation) {
 	
 		try {
-			File file = new File(fileLocation);
+			System.out.println("what");
+			URL url = Test.class.getClassLoader().getResource(fileLocation);
+			System.out.println(url.getPath());
+			File file = new File(url.getPath());
 			Scanner sc = new Scanner(file);
 			String commandLine =  sc.nextLine();
 			String[] commands = commandLine.split("\n");
@@ -77,7 +83,7 @@ public class Rummikub {
 	
 	
 	public void setDeck(Deck deck) {this.deck = deck;}
-	public void setCommandQueue(LinkedList<String> commandQueue){this.commandQueue = fileCommands;}
+	public void setCommandQueue(LinkedList<String> commandQueue){this.commandQueue = commandQueue;}
 	public Deck getDeck() {return this.deck;}
 	
 	public int play() {
@@ -99,7 +105,7 @@ public class Rummikub {
 				if(!commandQueue.isEmpty() && players.get(turnNumber%4)instanceof Human) {
 					selection = commandQueue.poll();
 				}else {
-					selection = players.get(turnNumber%4).play(board,deck);
+					selection = players.get(turnNumber%4).play(board,deck,reader);
 				}
 				resolveTurn(players.get(turnNumber%4),board,deck,selection);
 				turnNumber++;
@@ -115,6 +121,22 @@ public class Rummikub {
 	}
 	
 	public void resolveTurn(Player p, Board b, Deck d, String selection) {
+		Meld aMeld = new Meld();
+		String[] melds = selection.split("/");
+		String[] steps;
+		for(int i = 0; i<melds.length; i++) {
+			steps = melds[i].split(" ");
+			for(int q = 0; q<steps.length; q++) {
+				if(steps[q].toUpperCase() == "MELD") {
+					b.add(aMeld);
+					aMeld = new Meld();
+				}else if(steps[q].toUpperCase().charAt(0) == 'H') {
+					aMeld.add(p.getHand().remove(Integer.parseInt(steps[q].substring(1))));
+				}else if (steps[q].toUpperCase().charAt(0) == 'M') {
+					p.getHand().add(aMeld.remove(Integer.parseInt(steps[q].substring(1))));
+				}
+			}
+		}
 		
 	}
 	public String toString() {
@@ -132,18 +154,22 @@ public class Rummikub {
 		
 		for(int q = 0; q < (turnNumber % 4); q++) {
 			returnString += ("Player " + q);
-			if (players.get(turnNumber) % 4 == 0) {returnString += "(Human)";}
+			if ((turnNumber % 4) == 0) {returnString += "(Human)";}
 			else {returnString += "Computer";}
 			returnString += "\t";
 		}
 		returnString += "nl";
-		returnString += board.toString()
+		returnString += board.toString();
+		
+		return returnString;
 	}
 
 	
 	public static void main(String[] args) {
 			try {
-				
+				System.out.println(args.length);
+				System.out.println(args);
+				System.out.println("Tes");
 				if (args.length == 0) {
 					Rummikub game = new Rummikub();
 					game.play();
@@ -160,7 +186,7 @@ public class Rummikub {
 				System.err.println(e);
 				System.exit(-1);
 			}
-		}
+	}
 	
 		
 }

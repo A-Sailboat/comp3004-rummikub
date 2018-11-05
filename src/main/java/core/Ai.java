@@ -20,7 +20,7 @@ class OneAi implements Ai{
 		return "AI strategy 1";
 	}
 	
-	public Tile canPlayOnMeld() {
+	public Tile canPlayOnMeld(Meld meld) {
 		return null;
 	}
 }

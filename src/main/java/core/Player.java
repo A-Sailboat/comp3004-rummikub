@@ -34,4 +34,8 @@ public abstract class Player {
 		aiType = newAiType;
 		
 	}
+	
+	public Ai getAiType() {
+		return aiType;
+	}
 }

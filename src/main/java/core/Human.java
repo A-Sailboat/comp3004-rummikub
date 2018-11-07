@@ -73,16 +73,23 @@ public class Human extends Player{
 					}
 					board.add(bufferMeld);
 					bufferMeld  = new Meld();
-				}else if(response.toUpperCase().equals("M")){
-					while(!response.toUpperCase().equals("F")) {
+				}else if(response.toUpperCase().toUpperCase().equals("M")){
+					while(!response.toUpperCase().toUpperCase().equals("F")) {
 						response = "";
 						madeAPlay = true;
 						System.out.print(modifyInstructions);
 						System.out.print("Board:\n"+board.toString());
-						if(commandQueue == null) {focusedMeld = board.remove(Integer.parseInt(input.next()));
+						if(commandQueue == null) {
+							String hold = input.next();
+							if (hold.toUpperCase().equals("F")||hold.toUpperCase().equals("N")) {
+								response = hold;
+							}else {
+								focusedMeld = board.remove(Integer.parseInt(hold));
+							}
+							
 						}else {
 							System.out.print(commandQueue);
-							if(commandQueue.peekFirst().equals("F")||commandQueue.peekFirst().equals("N")) {
+							if(commandQueue.peekFirst().toUpperCase().equals("F")||commandQueue.peekFirst().toUpperCase().equals("N")) {
 								response = commandQueue.poll();
 							}else {
 							

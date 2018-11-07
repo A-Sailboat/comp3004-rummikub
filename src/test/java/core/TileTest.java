@@ -36,8 +36,6 @@ public class TileTest extends TestCase{
 	public void testPrintTile() {
 		Tile tile1 = new Tile(8, "RED");
 		
-		System.out.println(tile1.printTile());
-		
 		assertEquals(tile1.printTile(), "R8");
 		
 		

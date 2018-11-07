@@ -2,31 +2,31 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public abstract class Player {
-	ArrayList<Tile> hand = new ArrayList<Tile>();
+	Hand hand = new Hand();
+	String playerName;
+	boolean playedThirtyPoints = false;
 	
 	public Ai aiType;
 	
-	public Player() {}
 	
-	public Player(ArrayList<Tile> hand) {
-		this.hand = hand;
-	}
-	
-	
-	public ArrayList<Tile> getHand() {
+	public Hand getHand() {
 		return hand;
 	}
 	
-	public abstract String play(Board board, Deck deck);
+	public Hand addToHand(Tile tile) {
+		hand.add(tile);
+		return hand;
+	}
 	
+	public abstract boolean play(Board board, Deck deck, LinkedList<String> commandQueue) ;
 	
-	//Not actual implementation. Will need later. 
 	public String printAiType(){
 		
-		return aiType.ai();
+		return aiType.toString();
 		
 	}
 	
@@ -36,7 +36,19 @@ public abstract class Player {
 		
 	}
 
-	public String play(Board board, Deck deck, Scanner reader) {
-		return null;
+
+	
+	
+	public void setPlayerName(String setName) {
+		playerName = setName;
+	}
+	
+	public String getPlayerName() {
+		return playerName;
+	}
+	
+	public Ai getAiType() {
+		return aiType;
+
 	}
 }

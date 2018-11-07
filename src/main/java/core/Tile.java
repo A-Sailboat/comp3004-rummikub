@@ -20,16 +20,17 @@ public class Tile implements Comparable<Tile> {
 		this.visible 	=	true;
 		
 		if(twoPartId.charAt(0) == 'B') {
-			this.color = "BLUE";
+			this.color = "B";
 		}else if(twoPartId.charAt(0) == 'G') {
-			this.color = "GREEN";
+			this.color = "G";
 		}else if(twoPartId.charAt(0) == 'R') {
-			this.color = "RED";
+			this.color = "R";
 		}else if(twoPartId.charAt(0) == 'O') {
-			this.color = "ORANGE";
+			this.color = "O";
 		}
-	
-		this.number 	= 	number;
+		
+		this.number = Integer.parseInt(twoPartId.substring(1));
+		setValue();
 
 	}
 	
@@ -55,7 +56,7 @@ public class Tile implements Comparable<Tile> {
 	
 
 	//Returns String that represents Tile in a String format
-	public final String printTile(){
+	public String printTile(){
 		if(!visible) {
 			return "A hidden tile";
 		}
@@ -69,18 +70,21 @@ public class Tile implements Comparable<Tile> {
 	public int compareTo(Tile tile2) {
 		return getValue() - tile2.getValue();
 	}
+	public String toString() {
+		return getColor()+getNumber();
+	}
 	
 	//Method to automatically set value variable automatically based off of color and number. Only meant to be used within class.
 	//Range between int 1 - 48
 	private void setValue() {
 		int count = 0;
-		if (getColor() == "R"){
+		if (getColor().equals("R")) {
 			count += 12 * 0;
-		}else if(getColor() == "B") {
+		}else if(getColor().equals("B")) {
 			count += 12 * 1;
-		}else if (getColor() == "G") {
+		}else if (getColor().equals("G")) {
 			count += 12 * 2;
-		}else if (getColor() == "O") {
+		}else if (getColor().equals("O")) {
 			count += 12 * 3;
 		}
 		count += getNumber();

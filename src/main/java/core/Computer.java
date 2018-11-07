@@ -1,6 +1,7 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 public class Computer extends Player{
@@ -12,18 +13,20 @@ public class Computer extends Player{
 	
 	@Override
 	public String toString() {
-		return "A Computer player";
+		return "Computer Player ("+aiType.toString()+")";
 	}
 	
-	public String play(Board board, Deck deck) {
-		return null;
+	public boolean play(Board board, Deck deck, Scanner reader) {
+		return aiType.makePlay(board,deck,hand,playedThirtyPoints);
 	}
 
-	public String play(Board board, Deck deck, ArrayList<String> fileCommands) {
-		// TODO Auto-generated method stub
-		return null;
+
+	@Override
+	public boolean play(Board board, Deck deck, LinkedList<String> commandQueue) {
+		return aiType.makePlay(board,deck,hand,playedThirtyPoints);
 	}
 	
+
 	
 	
 

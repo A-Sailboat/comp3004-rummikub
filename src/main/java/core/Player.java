@@ -16,6 +16,9 @@ public abstract class Player {
 	public Hand getHand() {
 		return hand;
 	}
+	public void  clearHand() {
+		hand = new Hand();
+	}
 	
 	public Hand addToHand(Tile tile) {
 		hand.add(tile);
@@ -35,10 +38,6 @@ public abstract class Player {
 		aiType = newAiType;
 		
 	}
-
-
-	
-	
 	public void setPlayerName(String setName) {
 		playerName = setName;
 	}

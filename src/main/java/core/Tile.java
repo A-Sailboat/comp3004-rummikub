@@ -27,9 +27,11 @@ public class Tile implements Comparable<Tile> {
 			this.color = "R";
 		}else if(twoPartId.charAt(0) == 'O') {
 			this.color = "O";
-		}
-		
+		}else if(twoPartId.charAt(0) == 'J') {
+			this.color = "J";
+			
 		this.number = Integer.parseInt(twoPartId.substring(1));
+		
 		setValue();
 
 	}
@@ -86,7 +88,10 @@ public class Tile implements Comparable<Tile> {
 			count += 12 * 2;
 		}else if (getColor().equals("O")) {
 			count += 12 * 3;
+		}else if (getColor().equals("J")) {
+			count = 0;
 		}
+		
 		count += getNumber();
 		value = count;
 	}

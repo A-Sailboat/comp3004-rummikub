@@ -26,6 +26,16 @@ public class RummikubTest extends TestCase{
 		
 	}
 	
+	public void deckSizeTest() throws IOException {
+		Rummikub game;
+		game = new Rummikub("baseRequirements/baseCase.txt");
+		game.play();
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			assertTrue();
+		
+	}
+	
 	public void testRequirementTwo() throws IOException {
 		Rummikub game1 =  new Rummikub("requirement2/oneTurnCase.txt");
 		Rummikub game2 =  new Rummikub("requirement2/twoTurnCase.txt");

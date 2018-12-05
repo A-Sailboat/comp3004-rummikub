@@ -10,10 +10,14 @@ public class Human extends Player{
 	public Human() {
 		aiType = new NoAi();
 	}
+	public Human(String name) {
+		aiType = new NoAi();
+		this.playerName = name;
+	}
 
 	@Override
 	public String toString() {
-		return "Human Player";
+		return "Human Player "+ playerName;
 	}
 	@Override
 	public boolean play(Board board, Deck deck, LinkedList<String> commandQueue) {

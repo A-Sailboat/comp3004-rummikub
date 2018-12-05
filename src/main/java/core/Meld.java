@@ -49,27 +49,28 @@ public class Meld  {
 	
 	
 	public String determineType() { 
-
-		boolean groupFlag = true;
-		boolean runFlag = true;
+		String meldType = "";
+		int groupFlag = 0;
+		int runFlag = 0;
 		int nonSequentialNumbers = 0;
-		
+		int jokerCount = 0;
 		ArrayList<String> observedColors = new ArrayList<String>();
 		ArrayList<Integer> observedNumbers = new ArrayList<Integer>();
 		
 		for(Tile t: tiles){
 			//if  the color repeats it can't be a group
-			if(observedColors.contains(t.getColor()))groupFlag = false;
+			if(observedColors.contains(t.getColor()))groupFlag++;
 			
 			//if  numbers don't repeat it can't be a group
 			if(observedNumbers.size() > 1) {
-				if (!observedNumbers.contains((t.getNumber()))) groupFlag = false;
+				if (!observedNumbers.contains((t.getNumber()))) groupFlag++;
 			}
 			
 			//if colors don't repeat it must not be a run
 			if(observedColors.size() > 1) {
-				if (!observedColors.contains((t.getColor()))) runFlag = false;
+				if (!observedColors.contains((t.getColor()))) runFlag++;
 			}
+			if(t.getColor().equals("J"))jokerCount++;
 			observedColors.add(t.getColor());
 			observedNumbers.add(t.getNumber());
 		}
@@ -84,16 +85,16 @@ public class Meld  {
 			}
 		}
 
-		if(nonSequentialNumbers > 1)runFlag = false;
+		if(nonSequentialNumbers > 1)runFlag++;
 		
 		if (observedNumbers.size() <3) {
-			runFlag= false;
-			groupFlag = false;
+			runFlag++;
+			groupFlag++;
 		}
 		
-		if(groupFlag && runFlag)return "NO MELD TYPE";
-		if(groupFlag)return "SET";
-		if(runFlag)return "RUN";
+		if(groupFlag + runFlag >0) meldType ="NO MELD TYPE";
+		if(groupFlag-jokerCount>0)return "SET";
+		if(runFlag-jokerCount>0)return "RUN";
 		return "INVALID MELD";
 	}
 	

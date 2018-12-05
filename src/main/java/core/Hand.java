@@ -42,6 +42,14 @@ public class Hand {
 		return hand;
 	}
 	
+	public int pointValue() {
+		int count = 0;
+		for(Tile t: hand) {
+			count+= t.getNumber();
+		}
+		return count;
+	}
+	
 	//Arrange the hand in order. First by colour then by number. 
 	//Example hand = ["O2", "G9", "G2", "R11", "B2", "R2"] = ["R2", "R11", "B2", "G2", "G9", "O2"] 
 	public void arrangeHand(){

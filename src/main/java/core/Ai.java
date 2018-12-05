@@ -32,7 +32,7 @@ class OneAi implements Ai{
 	public Tile canPlayOnMeld(Meld meld) {
 		return null;
 	}
-	public boolean makePlay(Board board, Deck deck, Hand hand,boolean playedThirtPoints) {
+	public boolean makePlay(Board board, Deck deck, Hand hand,boolean playedThirtyPoints) {
 		int pointCount;
 		
 		//f(!playedThirtyPoints) {

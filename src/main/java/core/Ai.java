@@ -1,12 +1,13 @@
 package core;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public interface Ai {
 	
 	abstract String toString();
 
-	abstract boolean makePlay(Board board, Deck deck, Hand hand, boolean playedThirtyPoints);
+	abstract boolean makePlay(Board board,ArrayList<Tile> deck, Hand hand, boolean playedThirtyPoints);
 
 }
 
@@ -15,7 +16,7 @@ class NoAi implements Ai{
 		return "No ai";
 	}
 
-	public boolean makePlay(Board board, Deck deck, Hand hand,boolean playedThirtyPoints) {
+	public boolean makePlay(Board board, ArrayList<Tile> deck, Hand hand,boolean playedThirtyPoints) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -32,7 +33,7 @@ class OneAi implements Ai{
 	public Tile canPlayOnMeld(Meld meld) {
 		return null;
 	}
-	public boolean makePlay(Board board, Deck deck, Hand hand,boolean playedThirtyPoints) {
+	public boolean makePlay(Board board, ArrayList<Tile> deck, Hand hand,boolean playedThirtyPoints) {
 		int pointCount;
 		
 		//f(!playedThirtyPoints) {
@@ -53,7 +54,7 @@ class TwoAi implements Ai{
 		return null;
 	}
 
-	public boolean makePlay(Board board, Deck deck, Hand hand, boolean playedThirtyPoints) {
+	public boolean makePlay(Board board, ArrayList<Tile> deck, Hand hand, boolean playedThirtyPoints) {
 		return false;
 	}
 	
@@ -69,7 +70,7 @@ class ThreeAi implements Ai{
 		return null;
 	}
 
-	public boolean makePlay(Board board, Deck deck, Hand hand, boolean playedThirtyPoints) {
+	public boolean makePlay(Board board, ArrayList<Tile> deck, Hand hand, boolean playedThirtyPoints) {
 		
 		return false;
 	}

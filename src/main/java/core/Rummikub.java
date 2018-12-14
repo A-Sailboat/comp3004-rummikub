@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
@@ -26,8 +27,8 @@ public class Rummikub{
 	private final Scanner input = new Scanner(System.in);
 	private String[] aiNames = {"GLaDOS","HAL-9000","DEEP BLUE","R2D2","JARVIS","DEEP THOUGHT","MARVIN","EDDIE","HACTAR"};
 	
-	static RummikubModel	r = new RummikubModel();
-	RummikubView	v = new RummikubView();
+	RummikubModel r = new RummikubModel(this);
+	RummikubView	v = r.getRummikubView();
 
 	
 	public Rummikub() {
@@ -86,9 +87,6 @@ public class Rummikub{
 		
 		
 		
-		r.setDeck(new Deck());
-		r.getDeck().shuffle();
-		
 		r.setBoard(new Board());
 		
 	
@@ -109,7 +107,7 @@ public class Rummikub{
 		}
 		
 		String[] settings = r.getFileCommandQueue().poll().split(",");
-		
+		//System.out.println(settings[0]+settings[1]);
 		r.setCommandMode(Boolean.parseBoolean(settings[1]));
 		r.setMaxTurns(Integer.parseInt(settings[2]));
 		r.setUseTurnTimer(Boolean.parseBoolean(settings[3]));
@@ -143,18 +141,11 @@ public class Rummikub{
 				deckString += r.getFileCommandQueue().poll();
 			}
 			
-			r.setDeck(new Deck(deckString.trim()));
+			r.setDeck(addFileDeck(deckString.trim()));
+			
 			for(String s: r.getFileCommandQueue().poll().split(",")) {
 				System.out.println("%"+s);
 				r.getInitialDraws().offer(new Tile(s));
-			}
-			while(!r.getFileCommandQueue().isEmpty()){
-				LinkedList<String> aTurn = new LinkedList<String>();
-				aTurn.offer(r.getFileCommandQueue().poll());
-				while(!aTurn.getLast().equals("E")){
-					aTurn.offer(r.getFileCommandQueue().poll());
-				}
-				r.getPlayerTurnQueue().offer(aTurn);
 			}
 			
 			//The remaining lines contain commands that will occur on the player's turns
@@ -167,7 +158,7 @@ public class Rummikub{
 	
 
 	public String  getInput(ArrayList<String> acceptableResponces){
-	
+		if(r.getFileCommandQueue().isEmpty()){
 		String responce = null;
 		
 			do {
@@ -183,13 +174,16 @@ public class Rummikub{
 		
 		
 		return responce;
+		}else {
+			return r.getFileCommandQueue().poll();
+		}
 	}
 	
 	public boolean getChoice(){
 	
 		String response = null;
-		
-		do{
+		if(r.getFileCommandQueue().isEmpty()){
+			do{
 			try {
 				response = input.next();
 				response = response.toUpperCase();
@@ -201,8 +195,11 @@ public class Rummikub{
 			}
 			//System.out.println("loopy");
 			//System.out.println(!(response.equals("Y")) && !(response.equals("N")));
+			}
+			while(!(response.equals("Y") || response.equals("N")));
+		}else {
+			response = r.getFileCommandQueue().poll();
 		}
-		while(!(response.equals("Y") || response.equals("N")));
 		
 		//System.out.println(response);
 		
@@ -212,27 +209,29 @@ public class Rummikub{
 		
 	}
 	public int getInt(){
-	
 		boolean notDone = true;
-	
 		int returnInt = 0;
-		do {
-			try {
-				returnInt = Integer.parseInt(input.next());
-				notDone = false;
-			}catch(Exception e) {
-				System.out.println("There was an error in the input, please try again");
-				returnInt = getInt();
-			}
 		
-		}while(notDone);
-	
-		return returnInt;
+		if(r.getFileCommandQueue().isEmpty()){
+			
+			do {
+				try {
+					returnInt = Integer.parseInt(input.next());
+					notDone = false;
+				}catch(Exception e) {
+					System.out.println("There was an error in the input, please try again");
+					returnInt = getInt();
+				}
+		
+			}while(notDone);
+		}else {returnInt = Integer.parseInt(r.getFileCommandQueue().poll());}
+			return returnInt;
+		
 	}
 	public int getInt(int min, int max){
 	
 		int returnInt = 0;
-		
+		if(r.getFileCommandQueue().isEmpty()){
 		do {
 			try {
 				returnInt = Integer.parseInt(input.next());
@@ -241,25 +240,59 @@ public class Rummikub{
 				returnInt = getInt(min,max);
 			}
 		}while(returnInt < min ||returnInt > max);
-		
+		}else {returnInt = Integer.parseInt(r.getFileCommandQueue().poll());}
 		
 		return returnInt;
 	}
-	
+	public ArrayList<Tile> addFileDeck(String fileString) {
+		ArrayList<Tile> t = new ArrayList<Tile>();
+		String[] tileList = fileString.split(" ");
+		
+		for(String s: tileList) {
+			t.add(new Tile(s));
+		}
+		return t;
+	}
+	public ArrayList<Tile> freshDeck(){
+		ArrayList<Tile> t = new ArrayList<Tile>();
+		
+		for(int i = 1; i < 14; i++) {
+			Tile tile = new Tile(i, "R");
+			t.add(tile);
+			t.add(tile);
+		}
+		for(int i = 1; i < 14; i++) {
+			Tile tile = new Tile(i, "B");
+			t.add(tile);
+			t.add(tile);
+		}
+		for(int i = 1; i < 14; i++) {
+			Tile tile = new Tile(i, "G");
+			t.add(tile);
+			t.add(tile);
+		}
+		for(int i = 1; i < 14; i++) {
+			Tile tile = new Tile(i, "O");
+			t.add(tile);
+			t.add(tile);
+		}
+		Collections.shuffle(t);
+		return t;
+	}
 	public String  getInput(){
 		
 		String responce = null;
-		
-		while(responce == null) {
-			try {
-				responce = input.next();
-				responce = responce.toUpperCase();
-			}catch(Exception e) {
-				System.out.println("There was an error in the input, please try again");
-				responce = getInput();
+		if(r.getFileCommandQueue().isEmpty()){
+			while(responce == null) {
+				try {
+					responce = input.next();
+					responce = responce.toUpperCase();
+				}catch(Exception e) {
+					System.out.println("There was an error in the input, please try again");
+					responce = getInput();
+				}
 			}
-		}
-		
+		}else{responce = r.getFileCommandQueue().poll();}
 		return responce;
 	}
 	
@@ -271,11 +304,11 @@ public class Rummikub{
 
 				if (args.length == 0) {
 					Rummikub game = new Rummikub();
-					r.play();
+					game.r.play();
 				}
 				else if (args.length == 1) { 
 					Rummikub game = new Rummikub(args[0]);
-					r.play();
+					game.r.play();
 				}else {
 					System.out.println("Correct usage is with 0 or 1 arguments (argument is the file name");
 				}

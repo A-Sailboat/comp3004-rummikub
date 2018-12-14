@@ -13,8 +13,10 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.util.Observer;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
@@ -28,15 +30,17 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 
-public class RummikubModel {
+public class RummikubModel{
 	
+	private static final int MAX_CONSOLE_SIZE = 6;
+	private static final int INITIAL_HAND_SIZE = 14;
 	final Duration timeout = Duration.ofSeconds(10);
 	ExecutorService executor = Executors.newSingleThreadExecutor();
 	
 	private int state;
 	private Board board;
 	private Board referanceCopy = new Board();
-	private Deck deck;
+	private ArrayList<Tile> deck =  new ArrayList<Tile>();
 	private Player[] turnOrder;
 	private Player currentPlayer;
 	private LinkedList<Tile> initialDraws = new LinkedList<Tile>();
@@ -45,6 +49,10 @@ public class RummikubModel {
 	private LinkedList<LinkedList<String>> playerTurnQueue = new LinkedList<LinkedList<String>>();
 	private Player winner;
 	private Tile newTile;
+
+	private final Scanner input = new Scanner(System.in);
+	
+	private LinkedList<String> consoleOutput = new LinkedList<String>();
 	
 	private boolean fileMode;
 	private boolean useTurnTimer;
@@ -62,86 +70,32 @@ public class RummikubModel {
 	public String allConsoleOutput="";
 	int roundCounter = 1;
 	
-
-	RummikubView	v = new RummikubView();
+	private Rummikub c; 
+	private RummikubView v;
 	
-	public RummikubModel() {
-		
+	public RummikubModel(Rummikub controller) {
+		this.c = controller;
+		this.v = new RummikubView(this);
+		deck = freshDeck();
+				
 	}
 	
 	//Method that will handle all gameplay
 	public void play() throws Exception{
 		
-			//Determine Turn Order
-			boolean failed = false;
-			Player highest;
-			turnOrder = new Player[getPlayerCount()];
-			
+		turnOrder = determineTurnOrder();
+		currentPlayer = turnOrder[turnNumber%playerCount];
+		state = 1;
+		v.draw();
 				
-			//System.out.println(turnOrder.length);
-			if(fileMode) {
-				for(Player p: players) {
-					p.addToHand(getInitialDraws().poll());
-				}
-			}else if(commandMode){
-				for(Player  p: players) {
-					System.out.println("Enter your Tiles one at a time ex \"G3\" "+p.getPlayerName() + (14 -p.getHand().getHandSize()) + " tiles remain");
-					p.hand.addTile(deck.dealTile(new Tile(getInput())));
-				}
-			}
-			
-			
-			
-			else{
-				
-				do {
-				failed = false;
-				Deck deckCopy = new Deck();
-				deckCopy.shuffle();
-				for(Player p: players) {
-					p.addToHand(deckCopy.dealTile());
-				}
-				
-			
-				highest = players.get(0);
-				for(Player p: players) {
-					if(highest == null) {highest = p;}
-					if(p.hand.pointValue() > highest.hand.pointValue())highest = p;
-				}
-				for(Player p: players) {
-					if(p.hand.pointValue() == highest.hand.pointValue() && !p.getPlayerName().equals(highest.getPlayerName())) {
-						failed = true;
-			
-					}
-				}
-				}while(failed);
-			}
-				highest = players.get(0);
-				for(Player p: players) {
-					if(highest == null) {highest = p;}
-					if(p.hand.pointValue() > highest.hand.pointValue())highest = p;
-				}
-				players.remove(highest);
-				players.add(0,highest);
-				turnOrder  = players.toArray(new Player[players.size()]);
-				
-				for(int i = 0; i<playerCount; i++) {
-					
-				}
-				currentPlayer = turnOrder[turnNumber%playerCount];
-				state = 1;
-				v.draw(this);
-				
-			
-			
-			//Initial Deal
-			for(Player p: players) {
-				for(int i=0; i<14; i++) {
-					p.addToHand(deck.dealTile());
-				}
-			}
-			state = 5;
-			v.draw(this);
+		for(Player p: players) {
+			p.clearHand();
+		}
+		//Initial Deal
+		commandHand(INITIAL_HAND_SIZE);
+		
+			state = 2;
+			v.draw();
 			
 			final LinkedList<String> turnCommands = null;
  			turnNumber = 0;
@@ -151,18 +105,18 @@ public class RummikubModel {
 				currentPlayer = turnOrder[turnNumber%playerCount];
 				
 			
-				needsToDraw = !(turnOrder[turnNumber%playerCount].play(getBoard(),deck,turnCommands)); 
+				needsToDraw = !(turnOrder[turnNumber%playerCount].play(getBoard(),deck,fileCommandQueue)); 
 			     
 				if(!needsToDraw) {
-					state = 7;
-					v.draw(this);
+					state = 2;
+					draw();
 				}
 				
 				else{
-					newTile = deck.dealTile(); 
+					newTile = deck.remove(0); 
 					turnOrder[turnNumber%playerCount].addToHand(newTile);
 					state =4;
-					v.draw(this);	
+					draw();	
 				}
 		
 				
@@ -184,8 +138,8 @@ public class RummikubModel {
 				}while(++count<playerCount);
 				winner = lowest;
 			}
-			state= 8;
-			v.draw(this);
+			state= 3;
+			v.draw();
 				
 	}
 	
@@ -200,7 +154,94 @@ public class RummikubModel {
 			}
 		}
 	}
+	public void commandHand(int numberOfCards) {
+		if(commandMode) {
+			for(Player  p: players) {
+				for(int i = 0; i<numberOfCards; i++) {
+					Boolean found = false;
+					int itemIndex = 0;
+					addConsoleOutput("Enter your Tiles one at a time ex \"G3\" "+p.getPlayerName() +" "+ (14 -p.getHand().getHandSize()) + " tiles remain");
+					v.draw();
+					Tile commandTile = new Tile(getInput());
+					System.out.println(deck.toString());
+					
+					
+					
 
+					for(Tile t: deck) {
+						if(commandTile.equals(t)) {
+							itemIndex = deck.indexOf(t);
+							found = true;
+							break;
+						}
+					}
+					
+					if(!found) {
+						
+						addConsoleOutput("The deck does not contain that tile.");
+						v.draw();
+						i--;
+					}else {
+						p.hand.addTile(deck.remove(itemIndex));
+					}
+					
+				}
+			}
+		}
+		else {
+			for(Player p: players) {
+				for(int i=0; i<numberOfCards; i++) {
+					p.addToHand(deck.remove(0));
+				}
+			}
+		}
+		return;
+	}
+	public Player[] determineTurnOrder(){
+		
+		
+		
+		if(commandMode){
+			commandHand(1);
+		}
+		else{
+			Boolean failed = false;
+			Player  highest;
+			
+			do {
+				failed = false;
+				ArrayList<Tile> deckCopy = freshDeck();
+
+				for(Player p: players) {
+					p.addToHand(deckCopy.remove(0));
+				}
+				
+			
+				highest = players.get(0);
+				for(Player p: players) {
+					if(highest == null) {highest = p;}
+					if(p.hand.pointValue() > highest.hand.pointValue())highest = p;
+				}
+				for(Player p: players) {
+					if(p.hand.pointValue() == highest.hand.pointValue() && !p.getPlayerName().equals(highest.getPlayerName())) {
+						failed = true;
+			
+					}
+				}
+				}while(failed);
+			}
+		Player highest;
+		
+		highest = players.get(0);
+		for(Player p: players) {
+			if(highest == null) {highest = p;}
+			if(p.hand.pointValue() > highest.hand.pointValue())highest = p;
+		}
+		players.remove(highest);
+		players.add(0,highest);
+		return players.toArray(new Player[players.size()]);
+			
+	}
 	public Player getWinner() {
 		return winner;
 	}
@@ -264,6 +305,9 @@ public class RummikubModel {
 	public void setFileMode(boolean fileMode) {
 		this.fileMode = fileMode;
 	}
+	public void draw() {
+		v.draw();
+	}
 
 
 
@@ -323,8 +367,43 @@ public class RummikubModel {
 		this.playerTurnQueue = playerTurnQueue;
 	}
 
-
-
+	public void addFileDeck(ArrayList<Tile> t, String fileString) {
+		String[] tileList = fileString.split(" ");
+		
+		for(String s: tileList) {
+			deck.add(new Tile(s));
+		}
+		
+	}
+	
+	//Creates New Deck and add 106 empty tiles.
+	public ArrayList<Tile> freshDeck(){
+		ArrayList<Tile> t = new ArrayList<Tile>();
+		
+		for(int i = 1; i < 14; i++) {
+			Tile tile = new Tile(i, "R");
+			t.add(tile);
+			t.add(tile);
+		}
+		for(int i = 1; i < 14; i++) {
+			Tile tile = new Tile(i, "B");
+			t.add(tile);
+			t.add(tile);
+		}
+		for(int i = 1; i < 14; i++) {
+			Tile tile = new Tile(i, "G");
+			t.add(tile);
+			t.add(tile);
+		}
+		for(int i = 1; i < 14; i++) {
+			Tile tile = new Tile(i, "O");
+			t.add(tile);
+			t.add(tile);
+		}
+		Collections.shuffle(t);
+		return t;
+	}
+	
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
@@ -344,15 +423,15 @@ public class RummikubModel {
 		
 		this.state = state;
 	}
-
-	public void setDeck(Deck deck) {
-		this.deck = deck;
-		
-	}
 	
 
-	public Deck getDeck() {
-		return  deck;	}
+	public ArrayList<Tile> getDeck() {
+		return deck;	
+	}
+	public void setDeck(ArrayList<Tile> tiles) {
+		this.deck = tiles;
+		return;
+	}
 
 	public Tile getNewTile() {
 		return newTile;
@@ -364,6 +443,24 @@ public class RummikubModel {
 
 	public Board getReferanceCopy() {
 		return referanceCopy;
+	}
+
+	public LinkedList<String> getConsoleOutput() {
+		return consoleOutput;
+	}
+
+	public void setConsoleOutput(LinkedList<String> consoleOutput) {
+		this.consoleOutput = consoleOutput;
+	}
+	public void addConsoleOutput(String consoleOutputLine) {
+		this.consoleOutput.addLast(consoleOutputLine);
+		
+		while(this.consoleOutput.size() > MAX_CONSOLE_SIZE) {
+			this.consoleOutput.removeFirst();
+		}
+	}
+	public RummikubView getRummikubView() {
+		return v;
 	}
 	
 		

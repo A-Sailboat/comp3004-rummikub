@@ -5,19 +5,17 @@ public class Tile implements Comparable<Tile> {
 	
 	private int	number;
 	private String 	color;
-	private boolean visible;
 	private int value;
 	
 	//Constructors 
 	public Tile(int number, String color ) {
-		visible 	=	true;
+	
 		this.number =	number;
 		this.color 	=	color;
 		setValue();
 	}
 	
 	public Tile(String twoPartId) {
-		this.visible 	=	true;
 		
 		if(twoPartId.charAt(0) == 'B') {
 			this.color = "B";
@@ -29,18 +27,28 @@ public class Tile implements Comparable<Tile> {
 			this.color = "O";
 		}else if(twoPartId.charAt(0) == 'J') {
 			this.color = "J";
-			
+		}
 		this.number = Integer.parseInt(twoPartId.substring(1));
 		
 		setValue();
-
+		//System.out.println( this.color+this.number+this.value);
 	}
 	
 	public Tile(int number, String color, boolean visible) {
-		this.visible 	=	visible;
 		this.number 	= 	number;
 		this.color 		= 	color;
 		setValue();
+	}
+	
+	public boolean equals(Tile t) {
+		if(this.number == t.number) {
+			if(this.color == t.color) {
+				if(this.value == t.value) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public Tile() {
@@ -50,21 +58,15 @@ public class Tile implements Comparable<Tile> {
 	//Getters
 	public int 	getNumber() 	{return number;}
 	public String 	getColor()		{return String.valueOf(color.charAt(0)) ;}
-	public boolean 	getVisibile()	{return visible;}
 	public int getValue() {return value;}
 	
 	//Setters
-	public void setVisiblity(boolean visible) {this.visible = visible;}
 	
 
 	//Returns String that represents Tile in a String format
 	public String printTile(){
-		if(!visible) {
-			return "A hidden tile";
-		}
-		else {
-			return String.valueOf(getColor().charAt(0))+ String.valueOf(getNumber());
-		}
+		return String.valueOf(getColor().charAt(0))+ String.valueOf(getNumber());
+		
 		
 	}
 	
@@ -89,7 +91,7 @@ public class Tile implements Comparable<Tile> {
 		}else if (getColor().equals("O")) {
 			count += 12 * 3;
 		}else if (getColor().equals("J")) {
-			count = 0;
+			count = 2000;
 		}
 		
 		count += getNumber();

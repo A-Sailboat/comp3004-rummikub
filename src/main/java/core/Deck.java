@@ -38,8 +38,9 @@ public class Deck {
 			deck.add(tile);
 			deck.add(tile);
 		}
-		Tile tile = new Tile(0, "J");
-			deck.add(tile);
+		////Tile tile = new Tile(0, "J");
+		//	deck.add(tile);
+		//	deck.add(tile);
 		/*while(size() != 106) {
 			Tile tile = new Tile();
 			deck.add(tile);
@@ -60,8 +61,12 @@ public class Deck {
 		return null;
 	}
 	public Tile dealTile(Tile t) {
+		
 		if(deck.contains(t)) {return deck.remove(deck.indexOf(t));}
 		return null;
+	}
+	public Boolean contains(Tile t) {
+		return deck.contains(t);
 	}
 	
 	

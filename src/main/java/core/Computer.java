@@ -31,13 +31,13 @@ public class Computer extends Player{
 		return "Computer Player "+playerName+"("+aiType.toString()+")";
 	}
 	
-	public boolean play(Board board, Deck deck, Scanner reader) {
+	public boolean play(Board board, ArrayList<Tile> deck, Scanner reader) {
 		return aiType.makePlay(board,deck,hand,playedThirtyPoints);
 	}
 
 
 	@Override
-	public boolean play(Board board, Deck deck, LinkedList<String> commandQueue) {
+	public boolean play(Board board, ArrayList<Tile> deck, LinkedList<String> commandQueue) {
 		return aiType.makePlay(board,deck,hand,playedThirtyPoints);
 	}
 	

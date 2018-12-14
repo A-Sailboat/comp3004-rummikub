@@ -2,6 +2,7 @@ package core;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -20,9 +21,9 @@ public class Human extends Player{
 		return "Human Player "+ playerName;
 	}
 	@Override
-	public boolean play(Board board, Deck deck, LinkedList<String> commandQueue) {
+	public boolean play(Board board, ArrayList<Tile> deck, LinkedList<String> commandQueue) {
 		boolean madeAPlay = false;
-		Scanner input = new Scanner(System.in);
+		final Scanner lines = new Scanner(System.in);
 		System.out.print(commandQueue);
 		Board backupBoard = board;
 		Hand backupHand = hand;
@@ -51,9 +52,10 @@ public class Human extends Player{
 			System.out.print(selectInstructions);
 			//if(!playedThirtyPoints) {System.out.print("You can't modify melds until you've played 30 points of melds.");} 
 			System.out.print("Board:\n"+board.toString());
+			
 			System.out.print("Your Hand: "+hand.toString()+"\n" );
 			
-			if(commandQueue == null) {response = input.next();
+			if(commandQueue.isEmpty() || commandQueue == null) {response = lines.nextLine();
 			}else {response = commandQueue.poll();}
 			
 			if(!response.toUpperCase().equals("E")) {
@@ -64,8 +66,8 @@ public class Human extends Player{
 						System.out.print("New Meld: "+ bufferMeld.toString()+"\n");
 						System.out.print("Your Hand: "+hand.toString()+"\n" );
 						
-						if(commandQueue == null) {response = input.next();
-						}else {response = commandQueue.poll();}
+						if(commandQueue == null || commandQueue.isEmpty()) {response = lines.nextLine();}
+						else {response = commandQueue.poll();}
 						
 	
 						try{
@@ -83,8 +85,8 @@ public class Human extends Player{
 						madeAPlay = true;
 						System.out.print(modifyInstructions);
 						System.out.print("Board:\n"+board.toString());
-						if(commandQueue == null) {
-							String hold = input.next();
+						if(commandQueue == null || commandQueue.isEmpty()) {
+							String hold = lines.nextLine();
 							if (hold.toUpperCase().equals("F")||hold.toUpperCase().equals("N")) {
 								response = hold;
 							}else {
@@ -92,7 +94,7 @@ public class Human extends Player{
 							}
 							
 						}else {
-							System.out.print(commandQueue);
+							//System.out.print(commandQueue);
 							if(commandQueue.peekFirst().toUpperCase().equals("F")||commandQueue.peekFirst().toUpperCase().equals("N")) {
 								response = commandQueue.poll();
 							}else {
@@ -107,8 +109,8 @@ public class Human extends Player{
 							System.out.print("Buffer Meld: "+ bufferMeld.toString()+"\n");
 							System.out.print("Your Hand: "+hand.toString()+"\n" );
 			
-							if(commandQueue == null) {response = input.next();
-							}else {response = commandQueue.poll();}
+							if(commandQueue == null || commandQueue.isEmpty()) {response = lines.nextLine();}
+							else {response = commandQueue.poll();}
 							
 							try{
 								if (response.charAt(0) == 'B'){

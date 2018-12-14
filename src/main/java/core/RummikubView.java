@@ -1,16 +1,18 @@
 package core;
 
+import java.util.ArrayList;
+
 public class RummikubView {
-	private boolean initialDraws;
-	private boolean allHands;
-	private boolean playerHand;
-	private boolean board;
-	private boolean turnManagement;
+	private RummikubModel model;
 	private int state = 0;
 	
-	
-	public void draw(RummikubModel model){
+	public RummikubView(RummikubModel model) {
+		this.model = model;
+	}
+
+	public void draw(){
 		int i = model.getState();
+		clear();
 		divider();
 		if(i==0){ //Initial State, Nothing is drawn at this time.
 			
@@ -19,31 +21,35 @@ public class RummikubView {
 			drawInitialDraws(model.getTurnOrder(), model.getCurrentPlayer());
 			
 			
-		}if(i==2){ //Turn State, Show Player Hand, the board, and highlight new melds
+		}if(i==2){ //Turn State, Show Player Turn, Player Hand,Board Turn Process
+			printWhoseTurn(model.getCurrentPlayer(),model.getTurnNumber());
+			divider();
 			currentPlayerHand(model.getCurrentPlayer());
+			divider();
 			drawBoard(model.getTurnOrder(),model.getBoard(),model.getTurnNumber());
 			
-		}if(i==3){//Mid-Turn State, for when player is  actively altering hand
-			
-			
-		}if(i==4){//Printing new tile
-			drewTile(model.getCurrentPlayer(), model.getNewTile());
-			
-		}if(i==5){//Draw all hands
-			drawAllHands(model.getTurnOrder());
-			
-		}if(i==6){
 	
 			
-		}if(i==7){//Returning from a Play
-			drawPlay(model.getCurrentPlayer(), model.getReferanceCopy(), model.getBoard());
-			
-		}if(i==8){ //Ending the  game
+		}if(i==3){ //Ending the  game
 			clear();
 			exitMessage(model.getWinner());
 			
+		}if(i==4){
+			printWhoseTurn(model.getCurrentPlayer(),model.getTurnNumber());
+			divider();
+			drewTile(model.getCurrentPlayer(), model.getNewTile());
+			divider();
+			currentPlayerHand(model.getCurrentPlayer());
+			divider();
+			drawBoard(model.getTurnOrder(),model.getBoard(),model.getTurnNumber());
 		}
-		
+			
+		divider();
+		System.out.println("Console:");
+		for(String s: model.getConsoleOutput()) {
+			System.out.println(s);
+		}
+
 		
 		
 	}

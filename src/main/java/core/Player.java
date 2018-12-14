@@ -25,7 +25,7 @@ public abstract class Player {
 		return hand;
 	}
 	
-	public abstract boolean play(Board board, Deck deck, LinkedList<String> commandQueue) ;
+	public abstract boolean play(Board board, ArrayList<Tile> deck, LinkedList<String> commandQueue) ;
 	
 	public String printAiType(){
 		
